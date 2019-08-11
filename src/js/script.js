@@ -90,11 +90,11 @@
 
     /* find the clickable trigger (the element that should react to clicking) */
 
-    const clickableTrigger = thisProduct.element.querySelectorAll(select.menuProduct.clickable);
+    const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
 
     /* START: click event listener to trigger */
 
-      clickableTrigger.addEventListener('click',function(event){
+      clickableTrigger.addEventListener('click', function(event){
 
       /* prevent default action for event */
 
@@ -102,11 +102,11 @@
 
       /* toggle active class on element of thisProduct */
 
-      thisProduct.element.classList.add('active');
+      thisProduct.element.classList.toggle('active');
 
       /* find all active products */
 
-      const activeProducts = document.querySelectorAll('.product.active');
+      const activeProducts = document.querySelectorAll(select.menuProduct.clickable);
 
       /* START LOOP: for each active product */
 
@@ -132,7 +132,7 @@
   });
 }
 
-  const app = {
+  const app ={
     initMenu: function(){
       const thisApp = this;
       console.log('thisApp.data:', thisApp.data);
@@ -159,8 +159,8 @@
       thisApp.initData();
       thisApp.initMenu();
 
-  },
-}
+  }
 };
+
 app.init();
 }

@@ -136,6 +136,7 @@
       const thisProduct = this;
 
       const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData:', formData);
 
       thisProduct.params = {};
       let price = thisProduct.data.price;
@@ -152,12 +153,12 @@
           }
 
           else if (!optionSelected && option.defaulf){
-            price = price - option.defaulf;
+            price = price - option.price;
           }
         }
       }
 
-      thisProduct.priceElem.innerHTML = thisProduct.price;
+      thisProduct.priceElem = thisProduct.price;
     }
   }
 

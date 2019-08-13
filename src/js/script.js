@@ -154,18 +154,18 @@
           else if (!optionSelected && option.defaulf){
             price = price - option.price;
           }
-          const selector = '.' + paramId + '_' + optionId;
-          const productImg = thisProduct.imageWrapper.querySelector(selector);
-          console.log('productImg:', productImg);
-          for(let productImg in selector){
+          const selectorImg = '.' + paramId + '-' + optionId;
+          console.log('selectorImg:', selectorImg);
 
-          if (productImg && optionSelected){
-            productImg.classList.add('active');
+          if(optionSelected && !option.default){
+            selectorImg.classList.add(classNames.menuProduct.imageVisible);
           }
-          else if(!productImg && optionSelected){
-            productImg.classList.remove('active');
+          else if(!optionSelected && option.defaulf){
+            selectorImg.classList.remove(classNames.menuProduct.imageVisible);
           }
-        }
+          //else {
+
+          //}
         }
       }
 

@@ -136,7 +136,6 @@
       const thisProduct = this;
 
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData:', formData);
 
       thisProduct.params = {};
       let price = thisProduct.data.price;
@@ -155,6 +154,18 @@
           else if (!optionSelected && option.defaulf){
             price = price - option.price;
           }
+          const selector = '.' + paramId + '_' + optionId;
+          const productImg = thisProduct.imageWrapper.querySelector(selector);
+          console.log('productImg:', productImg);
+          for(let productImg in selector){
+
+          if (productImg && optionSelected){
+            productImg.classList.add('active');
+          }
+          else if(!productImg && optionSelected){
+            productImg.classList.remove('active');
+          }
+        }
         }
       }
 
@@ -178,11 +189,11 @@
 
     init: function(){
       const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
+      //console.log('*** App starting ***');
+      //console.log('thisApp:', thisApp);
+      //console.log('classNames:', classNames);
+      //console.log('settings:', settings);
+      //console.log('templates:', templates);
 
       thisApp.initData();
       thisApp.initMenu();

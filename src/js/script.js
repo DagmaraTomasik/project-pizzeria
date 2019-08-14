@@ -151,6 +151,7 @@
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
 
@@ -177,6 +178,14 @@
             price = price - option.price;
           }
 
+          if (!thisProduct.params[paramId]){
+            thisProduct.params[paramId] = {
+              label: param.label,
+              options: {},
+            };
+          }
+          thisProduct.params[paramId].options[optionId] = option.label;
+
           const selectorImg = '.' + paramId + '-' + optionId;
           const selectedImg = document.querySelector(selectorImg);
           if(selectedImg) {
@@ -196,8 +205,13 @@
         }
       }
 
-      price *= thisProduct.amountWidget.value;
-      thisProduct.priceElem.innerHTML = price;
+      /* multiply price by amount */
+      thisProduct.priceSingle = price;
+      thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
+
+      /* set the contents of thisProduct.priceElem to be the value of variable price */
+      thisProduct.priceElem.innerHTML = thisProduct.price;
+      console.log(thisProduct.params);
     }
 
     initAmountWidget(){
@@ -207,6 +221,15 @@
         event.preventDefault();
         thisProduct.processOrder();
       });
+    }
+
+    addToCart(){
+      const thisProduct = this;
+
+      thisProduct.name = thisProduct.data.name;
+      thisProduct.amount = thisProduct.amountWidget.value;
+
+      app.cart.add(thisProduct);
     }
   }
 
@@ -279,6 +302,7 @@
       thisCart.products = [];
       thisCart.getElements(element);
       thisCart.initActions();
+      thisCart.add(menuProduct);
 
       console.log('new Cart:', thisCart);
     }
@@ -296,9 +320,20 @@
       thisCart.dom.toggleTrigger.addEventListener('click', function(event){
       event.preventDefault();
       thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive)
-    });
+      });
+    }
+
+    add(menuProduct){
+      const thisCart = this;
+
+      const generatedHTML = templates.menuProduct(thisProduct);
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+
+      thisCart.dom.productList = generatedDOM
+
+      console.log('adding Podukt:', menuProduct);
+    }
   }
-}
 
   const app = {
     initMenu: function(){

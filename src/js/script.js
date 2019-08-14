@@ -89,26 +89,20 @@
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
-    initAccordion(){
+    initAccordion() {
+
       const thisProduct = this;
 
       const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
 
-      clickableTrigger.addEventListener('click', function(event){
+      clickableTrigger.addEventListener('click', function(event) {
 
         event.preventDefault();
 
+        const activeProduct = document.querySelector('.product.active');
+        if(activeProduct && activeProduct != thisProduct.element) activeProduct.classList.remove('active');
         thisProduct.element.classList.toggle('active');
 
-        const activeProducts = document.querySelectorAll('.product.active');
-
-        for(let activeProduct of activeProducts){
-
-          if(activeProduct != thisProduct.element){
-
-            activeProduct.classList.remove('active');
-          }
-        }
       });
     }
 
@@ -151,21 +145,31 @@
             price = price + option.price;
           }
 
-          else if (!optionSelected && option.defaulf){
+          else if (!optionSelected && option.default){
             price = price - option.price;
           }
+
           const selectorImg = '.' + paramId + '-' + optionId;
-          console.log('selectorImg:', selectorImg);
-
-          if(optionSelected && !option.default){
-            selectorImg.classList.add(classNames.menuProduct.imageVisible);
+          const selectedImg = document.querySelector(selectorImg);
+          console.log(selectedImg);
+          if(selectedImg) {
+            if(optionSelected && !option.default){
+              console.log("Do pokazania");
+              document.querySelector(selectorImg).classList.add(classNames.menuProduct.imageVisible);
+            }
+            else if(!optionSelected && option.default){
+              console.log("Do schowania")
+              document.querySelector(selectorImg).classList.remove(classNames.menuProduct.imageVisible);
+            }
+            else if(!optionSelected && !option.default) {
+              console.log("Do pokazania")
+              document.querySelector(selectorImg).classList.remove(classNames.menuProduct.imageVisible);
+            }
+            else if(optionSelected && option.default) {
+              console.log("Do pokazania")
+              document.querySelector(selectorImg).classList.add(classNames.menuProduct.imageVisible);
+            }
           }
-          else if(!optionSelected && option.defaulf){
-            selectorImg.classList.remove(classNames.menuProduct.imageVisible);
-          }
-          //else {
-
-          //}
         }
       }
 

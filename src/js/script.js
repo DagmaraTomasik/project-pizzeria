@@ -302,7 +302,6 @@
       thisCart.products = [];
       thisCart.getElements(element);
       thisCart.initActions();
-      thisCart.add(menuProduct);
 
       console.log('new Cart:', thisCart);
     }
@@ -311,14 +310,16 @@
       const thisCart = this;
 
       thisCart.dom = {};
+
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
 
     initActions(){
       const thisCart = this;
-      thisCart.dom.toggleTrigger.addEventListener('click', function(event){
-      event.preventDefault();
+
+      thisCart.dom.toggleTrigger.addEventListener('click', function(){
       thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive)
       });
     }
@@ -326,12 +327,13 @@
     add(menuProduct){
       const thisCart = this;
 
-      const generatedHTML = templates.menuProduct(thisProduct);
+      const generatedHTML = templates.cartProduct(menuProduct);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
 
-      thisCart.dom.productList = generatedDOM
+      thisCart.dom.productList.appendChild(generatedDOM);
 
-      console.log('adding Podukt:', menuProduct);
+      thisCart.products.push(menuProduct);
+      console.log('thisCart:', thisCart);
     }
   }
 

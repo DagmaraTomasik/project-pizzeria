@@ -420,7 +420,7 @@
       };
 
       for(let product of thisCart.products){
-      product = thisCart.getData;
+      payload.products.push(product.getData());
       }
 
       const options = {
@@ -512,10 +512,19 @@
       });
     }
 
-    getData(product){
+    getData(){
       const thisCartProduct = this;
-    }
+
+      const data = {
+         id: thisCartProduct.id,
+         amount: thisCartProduct.amount,
+         price: thisCartProduct.price,
+         priceSingle: thisCartProduct.priceSingle,
+         params: thisCartProduct.params,
+       };
+       return data;
   }
+}
 
   const app = {
     initMenu: function(){

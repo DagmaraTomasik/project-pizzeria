@@ -54,11 +54,11 @@ const app = {
         const clickedElement = this;
         event.preventDefault();
 
-    const id = clickedElement.getAttribute('href').replace('#', '');
+        const id = clickedElement.getAttribute('href').replace('#', '');
 
-    thisApp.activatePage(id);
+        thisApp.activatePage(id);
       });
-    };
+    }
 
     let pagesMatchingHash = [];
 
@@ -80,13 +80,19 @@ const app = {
 
     for(let link of thisApp.navLink){
       link.classList.toggle(classNames.nav.active, link.getAttribute('href') == '#' + pageId);
-      console.log('link:', link);
     }
 
     for(let page of thisApp.pages){
       page.classList.toggle(classNames.pages.active, page.getAttribute('id') == pageId);
-      console.log('page:', page);
     }
+  },
+
+  initBooking: function(){
+    const thisApp = this;
+
+    const reservation = document.querySelector(select.containerOf.booking);
+    console.log('reservation:', reservation);
+
   },
 
 
@@ -96,6 +102,7 @@ const app = {
     thisApp.initPages();
     thisApp.initData();
     thisApp.initCart();
+    thisApp.initBooking();
   }
 };
 

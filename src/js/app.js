@@ -1,6 +1,6 @@
 import {Product} from './components/Product.js';
 import {Cart} from './components/Cart.js';
-import {select, settings} from './settings.js';
+import {select, settings, classNames} from './settings.js';
 
 const app = {
   initMenu: function(){
@@ -36,15 +36,64 @@ const app = {
     thisApp.cart = new Cart(cartElem);
 
     thisApp.productList = document.querySelector(select.containerOf.menu);
-    
+
     thisApp.productList.addEventListener('add-to-cart', function(event){
       app.cart.add(event.detail.product);
     });
   },
 
+  initPages: function(){
+    const thisApp = this;
+
+    thisApp.pages = Array.from(document.querySelector(select.containerOf.pages).children);
+
+    thisApp.navLink = Array.from(document.querySelectorAll(select.nav.links));
+
+    for(let link of thisApp.navLink){
+      link.addEventListener('click', function(event){
+        const clickedElement = this;
+        event.preventDefault();
+
+    const id = clickedElement.getAttribute('href').replace('#', '');
+
+    thisApp.activatePage(id);
+      });
+    };
+
+    let pagesMatchingHash = [];
+
+    if(window.location.hash.length > 2){
+      const idFromHash = window.location.hash.replace('#/', '');
+
+      pagesMatchingHash = thisApp.pages.filter(function(page){
+        return page.id == idFromHash;
+      });
+    }
+
+    thisApp.activatePage(pagesMatchingHash.length ? pagesMatchingHash[0].id : thisApp.pages[0].id);
+  },
+
+  activatePage: function(pageId){
+    const thisApp = this;
+
+    window.location.hash = '#/' + pageId;
+
+    for(let link of thisApp.navLink){
+      link.classList.toggle(classNames.nav.active, link.getAttribute('href') == '#' + pageId);
+      console.log('link:', link);
+    }
+
+    for(let page of thisApp.pages){
+      page.classList.toggle(classNames.pages.active, page.getAttribute('id') == pageId);
+      console.log('page:', page);
+    }
+  },
+
+
   init: function(){
     const thisApp = this;
 
+    thisApp.initPages();
     thisApp.initData();
     thisApp.initCart();
   }

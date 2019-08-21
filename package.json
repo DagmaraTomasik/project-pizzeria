@@ -30,7 +30,8 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "json-server": "^0.15.0"
+        "json-server": "^0.15.0",
+        "rangeslider-pure": "^0.4.10"
     },
     "devDependencies": {
         "autoprefixer-cli": "^1.0.0",

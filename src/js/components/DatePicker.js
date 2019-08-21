@@ -2,7 +2,7 @@ import {BaseWidget} from './BaseWidget.js';
 import {utils} from '../utils.js';
 import {settings, select} from '../settings.js';
 
-class DatePicker extends BaseWidget{
+export class DatePicker extends BaseWidget{
   constructor(wrapper){
     super(wrapper, utils.dateToStr(new Date()));
 
@@ -32,11 +32,12 @@ class DatePicker extends BaseWidget{
         onChange: function(selectedDates, dateStr){
           thisWidget.value = dateStr;
         }
-      });
+      }
+    });
   }
 
-  parseValue(value){
-    return value;
+  parseValue(newValue){
+    return newValue;
   }
 
   isValid(){

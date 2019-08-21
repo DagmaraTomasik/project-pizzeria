@@ -14,10 +14,10 @@ export class BaseWidget{
     return thisWidget.correctValue;
   }
 
-  set value(assigneValue){
+  set value(assignedValue){
     const thisWidget = this;
 
-    const newValue = thisWidget.parseValue(assigneValue);
+    const newValue = thisWidget.parseValue(assignedValue);
 
     if(newValue != thisWidget.correctValue && thisWidget.isValid(newValue)){
       thisWidget.correctValue = newValue;

@@ -36,18 +36,20 @@ export class AmountWidget extends BaseWidget{
     const thisWidget = this;
 
     thisWidget.dom.input.addEventListener('change', function(){
-      event.preventDefault();
+      //event.preventDefault();
       thisWidget.value = thisWidget.dom.input.value;
+      console.log('value:', thisWidget.value);
     });
 
-    thisWidget.dom.linkDecrease.addEventListener('click', function(){
+    thisWidget.dom.linkDecrease.addEventListener('click', function(event){
       event.preventDefault();
-      thisWidget.value = thisWidget.dom.linkDecrease.value -- ;
+      thisWidget.value = thisWidget.dom.linkDecrease.value--;
     });
 
-    thisWidget.dom.linkIncrease.addEventListener('click', function(){
+    thisWidget.dom.linkIncrease.addEventListener('click', function(event){
       event.preventDefault();
-      thisWidget.value = thisWidget.dom.linkIncrease.value ++ ;
+      thisWidget.value = thisWidget.dom.linkIncrease.value++;
     });
+    thisWidget.getElements();
   }
 }

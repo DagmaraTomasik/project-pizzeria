@@ -1,9 +1,12 @@
 import {templates, select} from '../settings.js';
 import {AmountWidget} from './AmountWidget.js';
+import {HourPicker} from './HourPicker.js';
+import {DatePicker} from './DatePicker.js';
 
 export class Booking{
   constructor(bookingElem){
     const thisBooking = this;
+    
     thisBooking.render(bookingElem);
     thisBooking.initWidgets();
   }
@@ -28,7 +31,7 @@ export class Booking{
 
     thisBooking.peopleAmount = new AmountWidget(thisBooking.dom.peopleAmount);
     thisBooking.hoursAmount = new AmountWidget(thisBooking.dom.hoursAmount);
-    thisBooking.datePicker = new AmountWidget(thisBooking.dom.datePicker);
-    thisBooking.hourPicker = new AmountWidget(thisBooking.dom.hourPicker);
+    thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
+    thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
   }
 }

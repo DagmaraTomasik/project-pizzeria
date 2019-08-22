@@ -2,7 +2,7 @@ import {BaseWidget} from './BaseWidget.js';
 import {utils} from '../utils.js';
 import {select, settings} from '../settings.js';
 
-export class HourPicker extends BaseWidget(){
+export class HourPicker extends BaseWidget {
   constructor(wrapper){
     super(wrapper, settings.hours.open);
 
@@ -36,7 +36,7 @@ export class HourPicker extends BaseWidget(){
   renderValue(){
     const thisWidget = this;
 
-    thisWidget.dom.output = thisWidget.value;
+    thisWidget.dom.output.innerHTML = thisWidget.value;
   }
 
 }

@@ -5,29 +5,57 @@ import {DatePicker} from './DatePicker.js';
 import {utils} from '../utils.js';
 
 export class Booking{
-  constructor(bookingElem){
-    const thisBooking = this;
+    constructor(bookingElem){
+      const thisBooking = this;
 
-    thisBooking.render(bookingElem);
-    thisBooking.initWidgets();
-    thisBooking.getData();
-  }
+      thisBooking.render(bookingElem);
+      thisBooking.addTablesListeners();
+      thisBooking.initWidgets();
+      thisBooking.getData();
+    }
 
-  render(bookingElem){
-    const thisBooking = this;
+    render(bookingElem){
+      const thisBooking = this;
 
-    const generatedHTML = templates.bookingWidget();
+      const generatedHTML = templates.bookingWidget();
 
-    thisBooking.dom = {};
-    thisBooking.dom.wrapper = bookingElem;
-    thisBooking.dom.wrapper.innerHTML = generatedHTML;
+      thisBooking.dom = {};
+      thisBooking.dom.wrapper = bookingElem;
+      thisBooking.dom.wrapper.innerHTML = generatedHTML;
 
-    thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);
-    thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
-    thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
-    thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
-    thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
-  }
+      thisBooking.dom.peopleAmount = thisBooking.dom.wrapper.querySelector(select.booking.peopleAmount);
+      thisBooking.dom.hoursAmount = thisBooking.dom.wrapper.querySelector(select.booking.hoursAmount);
+      thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
+      thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
+      thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+      thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
+    }
+
+    addTablesListeners(){
+      const thisBooking = this;
+
+      thisBooking.chosenTable = {};
+
+      for(let table of thisBooking.dom.tables) {
+        table.addEventListener('click', function() {
+
+          const tableId = parseInt(table.getAttribute('data-table'));
+          const hour = utils.hourToNumber(thisBooking.hourPicker.value); //12:00 -> 12
+          const date = thisBooking.datePicker.value;
+
+          if(thisBooking.booked[date] && thisBooking.booked[date][hour]) {
+            if(thisBooking.booked[date][hour].includes(tableId)) {
+              alert('Stolik jest zajęty!');
+            } else {
+
+              //szukamy po selektorze elementu, który ma data-table = `thisBooking.chosenTable` i mu zabieramy klasę `booked`.
+              table.classList.add('booked');
+              thisBooking.chosenTable = tableId;
+            }
+          }
+        });
+      }
+    }
 
   initWidgets(){
     const thisBooking = this;
@@ -40,6 +68,11 @@ export class Booking{
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
     });
+
+    thisBooking.dom.form.addEventListener('submit', function(event){
+      event.preventDefault();
+      thisBooking.sendOrder();
+    })
   }
 
   getData(){
@@ -159,5 +192,43 @@ export class Booking{
         table.classList.remove(classNames.booking.tableBooked);
       }
     }
+  }
+
+  sendOrder(){
+    const thisBooking = this;
+
+    const url = settings.db.url + '/' + settings.db.booking;
+
+    for(let table of thisBooking.dom.tables){
+      if(table.classList.contains('booked')){
+        const tableNumber = parseInt(table.getAttribute(settings.booking.tableIdAttribute));
+        thisBooking.table = tableNumber;
+      }
+    }
+
+    const payload = {
+      people: thisBooking.peopleAmount,
+      hours: thisBooking.hoursAmount,
+      date: thisBooking.datePicker,
+      hour: thisBooking.hourPicker,
+      table: thisBooking.table,
+    };
+    console.log('payload:', payload);
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(url, options)
+      .then(function(response){
+        return response.json();
+      })
+      .then(function(parsedResponse){
+        console.log('parsedResponse:', parsedResponse);
+      });
   }
 }

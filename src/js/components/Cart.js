@@ -85,10 +85,6 @@ export class Cart{
         elem.innerHTML = thisCart[key];
       }
     }
-
-    console.log('totalNumber:', thisCart.totalNumber);
-    console.log('subtotalPrice:', thisCart.subtotalPrice);
-    console.log('totalPrice:', thisCart.totalPrice);
   }
 
   remove(cartProduct){

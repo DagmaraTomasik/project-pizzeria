@@ -29,6 +29,8 @@ export class Booking{
       thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
       thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
       thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
+      thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
+      thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
     }
 
     addTablesListeners(){
@@ -47,8 +49,9 @@ export class Booking{
             if(thisBooking.booked[date][hour].includes(tableId)) {
               alert('Stolik jest zajęty!');
             } else {
-
-              //szukamy po selektorze elementu, który ma data-table = `thisBooking.chosenTable` i mu zabieramy klasę `booked`.
+              const activeTable = thisBooking.dom.wrapper.querySelector(select.booking.tables+`[data-table="${thisBooking.chosenTable}"]`);
+              if(activeTable)
+              activeTable.classList.remove('booked');
               table.classList.add('booked');
               thisBooking.chosenTable = tableId;
             }
@@ -71,8 +74,8 @@ export class Booking{
 
     thisBooking.dom.form.addEventListener('submit', function(event){
       event.preventDefault();
-      thisBooking.sendOrder();
-    })
+      thisBooking.sendBooking();
+    });
   }
 
   getData(){
@@ -124,11 +127,11 @@ export class Booking{
     thisBooking.booked = {};
 
     for (let element of eventsCurrent){
-      element.makeBooked(element.date, element.hour, element.duration, element.table);
+      thisBooking.makeBooked(element.date, element.hour, element.duration, element.table);
     };
 
     for (let element of bookings){
-      element.makeBooked(element.date, element.hour, element.duration, element.table);
+      thisBooking.makeBooked(element.date, element.hour, element.duration, element.table);
     };
 
     const minDate = thisBooking.datePicker.minDate;
@@ -194,7 +197,7 @@ export class Booking{
     }
   }
 
-  sendOrder(){
+  sendBooking(){
     const thisBooking = this;
 
     const url = settings.db.url + '/' + settings.db.booking;
@@ -207,11 +210,13 @@ export class Booking{
     }
 
     const payload = {
-      people: thisBooking.peopleAmount,
-      hours: thisBooking.hoursAmount,
-      date: thisBooking.datePicker,
-      hour: thisBooking.hourPicker,
+      date: thisBooking.datePicker.value,
+      hour: thisBooking.hourPicker.value,
       table: thisBooking.table,
+      ppl: thisBooking.peopleAmount.value,
+      duration: thisBooking.hoursAmount.value,
+      phone: thisBooking.dom.phone.value,
+      address: thisBooking.dom.address.value,
     };
     console.log('payload:', payload);
 

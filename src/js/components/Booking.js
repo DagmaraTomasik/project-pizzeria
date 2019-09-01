@@ -36,7 +36,7 @@ export class Booking{
     addTablesListeners(){
       const thisBooking = this;
 
-      thisBooking.chosenTable = {};
+      thisBooking.chosenTable = null;
 
       for(let table of thisBooking.dom.tables) {
         table.addEventListener('click', function() {
@@ -175,18 +175,15 @@ export class Booking{
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
 
     let allAvailable = false;
-    console.log(allAvailable);
 
     if(typeof thisBooking.booked[thisBooking.date] == 'undefined' || typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined'){
       allAvailable = true;
-      console.log(allAvailable);
     }
 
     for(let table of thisBooking.dom.tables){
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
       if(!isNaN(tableId)){
         tableId = parseInt(tableId);
-        console.log(tableId);
       }
 
       if(!allAvailable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)){
@@ -203,7 +200,16 @@ export class Booking{
     const url = settings.db.url + '/' + settings.db.booking;
 
     for(let table of thisBooking.dom.tables){
-      if(table.classList.contains('booked')){
+
+    const date = thisBooking.datePicker.value;
+    const hour = thisBooking.hourPicker.value;
+    const tableId = parseInt(table.getAttribute('data-table'));
+    const duration = thisBooking.hoursAmount.value;
+
+
+
+      if(!(thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId))){
+        thisBooking.makeBooked(date, hour, duration, table);
         const tableNumber = parseInt(table.getAttribute(settings.booking.tableIdAttribute));
         thisBooking.table = tableNumber;
       }
@@ -219,6 +225,7 @@ export class Booking{
       address: thisBooking.dom.address.value,
     };
     console.log('payload:', payload);
+
 
     const options = {
       method: 'POST',

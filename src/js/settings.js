@@ -8,6 +8,7 @@ export const select = {
     menu: '#product-list',
     cart: '#cart',
     pages: '#pages',
+    booking: '#booking',
     booking: '.booking-wrapper',
     orderLink: '.orderLink',
     bookingLink: '.bookingLin',
@@ -90,6 +91,12 @@ export const classNames = {
     active: 'active',
   },
   pages: {
+    active: 'active',
+  },
+  order: {
+    active: 'active',
+  },
+  booking: {
     active: 'active',
   },
 };

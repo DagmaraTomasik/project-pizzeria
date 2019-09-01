@@ -212,6 +212,7 @@ export class Booking{
         thisBooking.makeBooked(date, hour, duration, table);
         const tableNumber = parseInt(table.getAttribute(settings.booking.tableIdAttribute));
         thisBooking.table = tableNumber;
+        thisBooking.updateDOM();
       }
     }
 

@@ -55,7 +55,7 @@ const app = {
         const clickedElement = this;
         event.preventDefault();
 
-        const id = clickedElement.getAttribute('href').replace('#', '');
+        const id = clickedElement.getAttribute('href').replace('#', ' ');
 
         thisApp.activatePage(id);
       });

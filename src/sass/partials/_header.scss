@@ -2,6 +2,7 @@
   padding: ($base-size * 5) 0 ($base-size * 8) 0;;
   background: $color-dark;
   color: $color-light;
+  max-height: 200px;
 
   &__wrapper {
     position: relative;
@@ -12,6 +13,7 @@
 .logo {
   display: inline-block;
   line-height: 1;
+  color: $color-light;
 
   &__title {
     margin: 0 0 $base-size 0;
@@ -33,6 +35,19 @@
     font-style: italic;
   }
 
+}
+
+.homeLink{
+  color: $color-light;
+}
+
+.homeLink:hover{
+  text-decoration: none;
+  color: $color-main;
+}
+
+.logo__subtitle {
+  font-family: $font-text;
 }
 
 .main-nav {

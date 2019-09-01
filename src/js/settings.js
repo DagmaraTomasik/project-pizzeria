@@ -9,6 +9,9 @@ export const select = {
     cart: '#cart',
     pages: '#pages',
     booking: '.booking-wrapper',
+    orderLink: '.orderLink',
+    bookingLink: '.bookingLin',
+    homeLink: '.homeLink',
   },
   all: {
     menuProducts: '#product-list > .product',

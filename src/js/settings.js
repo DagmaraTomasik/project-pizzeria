@@ -68,6 +68,7 @@ export const select = {
     phone: '[name="phone"]',
     address: '[name="address"]',
     starters: '.starters_checkbox',
+    availabilityRangeSlider: '.availability-wrapper',
   },
   nav: {
     links: '.start .card .card-body a',
@@ -92,12 +93,13 @@ export const classNames = {
   pages: {
     active: 'active',
   },
-  order: {
-    active: 'active',
-  },
-  booking: {
-    active: 'active',
-  },
+  rangeSlider: {
+    divWrapper: 'availability',
+    div: 'table-availability',
+    noTables: 'no-tables',
+    oneTable: 'one-table',
+    allTables: 'all-tables',
+  }
 };
 
 export const settings = {

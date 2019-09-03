@@ -78,6 +78,7 @@
       height: ($base-size * 2);
       top: -6px;
       background: $color-dark;
+      z-index: 1;
     }
 
    }
@@ -89,6 +90,34 @@
     box-shadow: none;
   }
 }
+
+.table-availability {
+  height: 12px;
+  width: 4.16%;
+  margin: 0;
+  padding: 0;
+
+  &:first-child {
+    border-radius: 50% 0 0 50%;
+  }
+
+  &:last-child {
+    border-radius: 0 50% 50% 0;
+  }
+}
+
+.no-tables {
+  background: #ff0000; //red
+}
+
+.one-table {
+  background: #ffa600; //orange
+}
+
+.all-tables {
+  background: #008d0f; //green
+}
+
 
  .flatpickr-day {
   &.disabled {
@@ -197,4 +226,9 @@
  .booking-options {
   @include flex(row, flex-start, space-between);
   margin: ($base-size * 4) auto;
+}
+
+.availability-wrapper{
+  position: relative;
+  display: flex;
 }

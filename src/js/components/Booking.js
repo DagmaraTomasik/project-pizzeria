@@ -212,8 +212,10 @@ export class Booking{
         thisBooking.makeBooked(date, hour, duration, table);
         const tableNumber = parseInt(table.getAttribute(settings.booking.tableIdAttribute));
         thisBooking.table = tableNumber;
+        if(thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)){
+        thisBooking.updateDOM();
+        }
       }
-      thisBooking.updateDOM();
     }
 
     const payload = {

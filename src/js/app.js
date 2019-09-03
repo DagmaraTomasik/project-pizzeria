@@ -51,11 +51,12 @@ const app = {
     thisApp.navLink = Array.from(document.querySelectorAll(select.nav.links));
 
     for(let link of thisApp.navLink){
+      console.log(link);
       link.addEventListener('click', function(event){
         const clickedElement = this;
         event.preventDefault();
 
-        const id = clickedElement.getAttribute('href').replace('#', ' ');
+        const id = clickedElement.getAttribute('href').replace('#', '');
 
         thisApp.activatePage(id);
       });

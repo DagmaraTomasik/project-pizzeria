@@ -8,7 +8,6 @@ export const select = {
     menu: '#product-list',
     cart: '#cart',
     pages: '#pages',
-    booking: '#booking',
     booking: '.booking-wrapper',
     orderLink: '.orderLink',
     bookingLink: '.bookingLin',
@@ -71,7 +70,7 @@ export const select = {
     starters: '.starters_checkbox',
   },
   nav: {
-    links: '.main-nav a',
+    links: '.start .card .card-body a',
   },
 };
 
